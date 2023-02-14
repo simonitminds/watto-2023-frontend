@@ -5,23 +5,16 @@ import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
 
-const LOGIN_MUTATION = graphql(/* GraphQL */ `
-  mutation Login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+const SIGNUP_MUTATION = graphql(/* GraphQL */ `
+  mutation Signup($username: String!, $password: String!) {
+    signup(username: $username, password: $password) {
       successful
-      result {
-        token
-        user {
-          id
-          username
-        }
-      }
     }
   }
 `);
 
-export const Login = () => {
-  const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+export const Signup = () => {
+  const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,7 +25,7 @@ export const Login = () => {
     };
     if (!attrs.username || !attrs.password) return;
 
-    login({
+    signup({
       variables: attrs,
     });
   };
@@ -48,9 +41,7 @@ export const Login = () => {
 
       {loading && <div className="animate-spin ">.</div>}
       {error && <div> {error.message} </div>}
-      {data && !error && (
-        <div> Welcome {data.login?.result?.user?.username} </div>
-      )}
+      {data && !error && <div> WELCOME beep boop {JSON.stringify(data)} </div>}
     </div>
   );
 };
