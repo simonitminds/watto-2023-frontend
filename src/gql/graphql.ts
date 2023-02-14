@@ -30,14 +30,76 @@ export type AuthPayload = {
   successful: Scalars['Boolean'];
 };
 
+export type Item = {
+  __typename?: 'Item';
+  id: Scalars['ID'];
+  insertedAt?: Maybe<Scalars['NaiveDateTime']>;
+  model?: Maybe<Model>;
+  name?: Maybe<Scalars['String']>;
+  price: Scalars['Float'];
+  type?: Maybe<Type>;
+  updatedAt?: Maybe<Scalars['NaiveDateTime']>;
+};
+
+export type ItemPayload = {
+  __typename?: 'ItemPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Item>;
+  /** Indicates if the mutation completed successfully or not. */
+  successful: Scalars['Boolean'];
+};
+
+export type Model = {
+  __typename?: 'Model';
+  id: Scalars['ID'];
+  indexPrice: Scalars['Int'];
+  insertedAt?: Maybe<Scalars['NaiveDateTime']>;
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['NaiveDateTime']>;
+};
+
+export type ModelPayload = {
+  __typename?: 'ModelPayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Model>;
+  /** Indicates if the mutation completed successfully or not. */
+  successful: Scalars['Boolean'];
+};
+
 export type RootMutationType = {
   __typename?: 'RootMutationType';
+  itemCreate?: Maybe<ItemPayload>;
+  itemUpdate?: Maybe<ItemPayload>;
   /** logins a user */
   login?: Maybe<AuthPayload>;
+  modelCreate?: Maybe<ModelPayload>;
+  modelUpdate?: Maybe<ModelPayload>;
   /** signups a new user a new user */
   signup?: Maybe<AuthPayload>;
+  typeCreate?: Maybe<TypePayload>;
+  typeUpdate?: Maybe<TypePayload>;
   /** updates a new user */
   updateUser?: Maybe<UpdateUserPayload>;
+};
+
+
+export type RootMutationTypeItemCreateArgs = {
+  modelId: Scalars['ID'];
+  name: Scalars['String'];
+  ownerId: Scalars['ID'];
+  typeId: Scalars['ID'];
+};
+
+
+export type RootMutationTypeItemUpdateArgs = {
+  id: Scalars['ID'];
+  modelId: Scalars['ID'];
+  name: Scalars['String'];
+  typeId: Scalars['ID'];
 };
 
 
@@ -47,9 +109,35 @@ export type RootMutationTypeLoginArgs = {
 };
 
 
+export type RootMutationTypeModelCreateArgs = {
+  multiplier: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+
+export type RootMutationTypeModelUpdateArgs = {
+  id: Scalars['ID'];
+  multiplier: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+
 export type RootMutationTypeSignupArgs = {
   password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
+};
+
+
+export type RootMutationTypeTypeCreateArgs = {
+  indexPrice: Scalars['Int'];
+  name: Scalars['String'];
+};
+
+
+export type RootMutationTypeTypeUpdateArgs = {
+  id: Scalars['ID'];
+  indexPrice: Scalars['Int'];
+  name: Scalars['String'];
 };
 
 
@@ -60,8 +148,50 @@ export type RootMutationTypeUpdateUserArgs = {
 
 export type RootQueryType = {
   __typename?: 'RootQueryType';
+  itemGet?: Maybe<Item>;
+  itemList?: Maybe<Array<Item>>;
+  me?: Maybe<User>;
+  modelGet?: Maybe<Model>;
+  modelList?: Maybe<Array<Model>>;
+  typeGet?: Maybe<Type>;
+  typeList?: Maybe<Array<Type>>;
   /** fetches a list of users */
   users?: Maybe<Array<Maybe<User>>>;
+};
+
+
+export type RootQueryTypeItemGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeModelGetArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type RootQueryTypeTypeGetArgs = {
+  id: Scalars['ID'];
+};
+
+export type Type = {
+  __typename?: 'Type';
+  id: Scalars['ID'];
+  insertedAt?: Maybe<Scalars['NaiveDateTime']>;
+  items?: Maybe<Array<Maybe<Item>>>;
+  multiplier: Scalars['Float'];
+  name: Scalars['String'];
+  updatedAt?: Maybe<Scalars['NaiveDateTime']>;
+};
+
+export type TypePayload = {
+  __typename?: 'TypePayload';
+  /** A list of failed validations. May be blank or null if mutation succeeded. */
+  messages?: Maybe<Array<Maybe<ValidationMessage>>>;
+  /** The object created/updated/deleted by the mutation. May be null if mutation failed. */
+  result?: Maybe<Type>;
+  /** Indicates if the mutation completed successfully or not. */
+  successful: Scalars['Boolean'];
 };
 
 export type UpdateUserPayload = {
@@ -80,7 +210,7 @@ export type User = {
   insertedAt?: Maybe<Scalars['NaiveDateTime']>;
   name?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['NaiveDateTime']>;
-  username?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
 };
 
 export type UserAuth = {
@@ -152,13 +282,23 @@ export type ValidationOption = {
   value: Scalars['String'];
 };
 
+export type ItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ItemsQuery = { __typename?: 'RootQueryType', itemList?: Array<{ __typename?: 'Item', name?: string | null, price: number, id: string }> | null };
+
 export type LoginMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
 }>;
 
 
-export type LoginMutation = { __typename?: 'RootMutationType', login?: { __typename?: 'AuthPayload', successful: boolean, result?: { __typename?: 'UserAuth', token?: string | null, user?: { __typename?: 'User', id: string, username?: string | null } | null } | null } | null };
+export type LoginMutation = { __typename?: 'RootMutationType', login?: { __typename?: 'AuthPayload', successful: boolean, result?: { __typename?: 'UserAuth', token?: string | null, user?: { __typename?: 'User', id: string, username: string } | null } | null } | null };
+
+export type ModelsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ModelsQuery = { __typename?: 'RootQueryType', modelList?: Array<{ __typename?: 'Model', name: string, id: string, indexPrice: number }> | null };
 
 export type SignupMutationVariables = Exact<{
   username: Scalars['String'];
@@ -168,6 +308,20 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'RootMutationType', signup?: { __typename?: 'AuthPayload', successful: boolean } | null };
 
+export type TypesQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type TypesQuery = { __typename?: 'RootQueryType', typeList?: Array<{ __typename?: 'Type', name: string, multiplier: number, id: string }> | null };
+
+export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeQuery = { __typename?: 'RootQueryType', me?: { __typename?: 'User', id: string, username: string } | null };
+
+
+export const ItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Items"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"itemList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"price"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ItemsQuery, ItemsQueryVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"successful"}},{"kind":"Field","name":{"kind":"Name","value":"result"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const ModelsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Models"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"indexPrice"}}]}}]}}]} as unknown as DocumentNode<ModelsQuery, ModelsQueryVariables>;
 export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"successful"}}]}}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
+export const TypesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Types"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"typeList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"multiplier"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<TypesQuery, TypesQueryVariables>;
+export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;

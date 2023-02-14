@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
+import { useSetUserState } from '../state/user_state';
 
 const LOGIN_MUTATION = graphql(/* GraphQL */ `
   mutation Login($username: String!, $password: String!) {
@@ -22,6 +23,7 @@ const LOGIN_MUTATION = graphql(/* GraphQL */ `
 
 export const Login = () => {
   const [login, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+  const setUser = useSetUserState();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,6 +38,16 @@ export const Login = () => {
       variables: attrs,
     });
   };
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('token', data.login?.result?.token || '');
+      setUser({
+        isLoggedIn: true,
+        username: data.login?.result?.user?.username ?? '',
+      });
+    }
+  }, [data]);
 
   return (
     <div className="flex flex-col gap-3">
