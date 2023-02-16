@@ -24,6 +24,7 @@ const AuthedRoutes = () => {
       <Link to={'/models'}>
         <Button> Models </Button>
       </Link>
+      <Button onClick={() => localStorage.clear()}>Logout</Button>
     </>
   );
 };
