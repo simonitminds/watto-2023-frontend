@@ -3,6 +3,7 @@ import { atom, useAtom } from 'jotai';
 const defaultUser = {
   isLoggedIn: false,
   username: '',
+  id: -1,
 };
 
 const userAtom = atom(defaultUser);

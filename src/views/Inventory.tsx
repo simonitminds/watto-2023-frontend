@@ -3,10 +3,11 @@ import { Header } from '../components/header';
 import { graphql } from '../gql';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button } from '../components/button';
+import { useUserState } from '../state/user_state';
 
 const QUERY_ITEMS = graphql(/* GraphQL */ `
-  query Items {
-    itemListByUserId(userId: 1) {
+  query ItemsInventory($userId: ID!) {
+    itemListByUserId(userId: $userId) {
       name
       price
       id
@@ -17,9 +18,9 @@ const QUERY_ITEMS = graphql(/* GraphQL */ `
   }
 `);
 
-const BUY_ITEM = graphql(/* GraphQL */ `
-  mutation BuyItem($itemId: ID!) {
-    buyItem(itemId: $itemId) {
+const SellItem = graphql(/* GraphQL */ `
+  mutation SellItem($itemId: ID!) {
+    sellItem(itemId: $itemId) {
       result {
         id
         name
@@ -36,12 +37,39 @@ const BUY_ITEM = graphql(/* GraphQL */ `
   }
 `);
 
-export const Items = () => {
-  const { data } = useQuery(QUERY_ITEMS);
-  const [mutation] = useMutation(BUY_ITEM);
+const MY_INVENTORY = graphql(/* GraphQL */ `
+  query MyInventory {
+    me {
+      username
+      id
+      balance
+    }
+  }
+`);
+export const Inventory = () => {
+  const user = useUserState();
+
+  const { data: meData } = useQuery(MY_INVENTORY, {
+    fetchPolicy: 'cache-and-network',
+  });
+
+  const { data } = useQuery(QUERY_ITEMS, {
+    variables: { userId: String(user.id) },
+    fetchPolicy: 'cache-and-network',
+  });
+  const [mutation] = useMutation(SellItem);
   return (
     <div className="flex flex-col gap-12">
-      <Header>Items</Header>
+      <Header>Inventory</Header>
+      <div className="rounded bg-white p-3 text-orange-600 flex flex-col gap-3">
+        <div>
+          <span className="underline"> username:</span> {meData?.me?.username}
+        </div>
+        <div>
+          <span className="underline">balance: </span>
+          <span className="font-bold text-xl">{meData?.me?.balance}</span>
+        </div>
+      </div>
       <div className="grid grid-cols-4 gap-3">
         {data?.itemListByUserId?.map((item) => {
           return (
@@ -63,9 +91,14 @@ export const Items = () => {
                 </div>
               </div>
               <Button
-                onClick={() => mutation({ variables: { itemId: item.id } })}
+                onClick={() =>
+                  mutation({
+                    variables: { itemId: item.id },
+                    refetchQueries: ['MyInventory', 'ItemsInventory'],
+                  })
+                }
               >
-                Buy
+                Sell
               </Button>
             </div>
           );

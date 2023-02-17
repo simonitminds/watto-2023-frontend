@@ -7,6 +7,7 @@ import { Root } from './views/root';
 import { Items } from './views/Items';
 import { Types } from './views/Types';
 import { Models } from './views/Models';
+import { Inventory } from './views/Inventory';
 
 export const router = createBrowserRouter([
   {
@@ -27,8 +28,12 @@ export const router = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: '/items',
+        path: '/market',
         element: <Items />,
+      },
+      {
+        path: '/inventory',
+        element: <Inventory />,
       },
       {
         path: '/types',

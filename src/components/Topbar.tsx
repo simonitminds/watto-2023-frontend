@@ -15,8 +15,11 @@ export function Topbar() {
 const AuthedRoutes = () => {
   return (
     <>
-      <Link to={'/items'}>
-        <Button> Items </Button>
+      <Link to={'/market'}>
+        <Button> Marketplace </Button>
+      </Link>
+      <Link to={'/inventory'}>
+        <Button> Inventory </Button>
       </Link>
       <Link to={'/types'}>
         <Button> Types </Button>

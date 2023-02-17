@@ -23,6 +23,7 @@ export function Root() {
       setUser({
         isLoggedIn: true,
         username: data.me?.username ?? '',
+        id: Number(data.me?.id),
       });
     }
   }, [data]);

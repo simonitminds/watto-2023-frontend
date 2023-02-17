@@ -45,6 +45,7 @@ export const Login = () => {
       setUser({
         isLoggedIn: true,
         username: data.login?.result?.user?.username ?? '',
+        id: Number(data.login?.result?.user?.id ?? -1),
       });
     }
   }, [data]);
