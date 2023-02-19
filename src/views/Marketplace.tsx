@@ -6,7 +6,7 @@ import { Button } from '../components/button';
 
 const INVENTORY_SUBSCRIPTION = graphql(/* GraphQL */ `
   subscription InventorySubscription {
-    marketplace {
+    marketplace(userId: "1") {
       id
       name
       price
@@ -48,7 +48,7 @@ const BUY_ITEM = graphql(/* GraphQL */ `
   }
 `);
 
-export const Items = () => {
+export const Marketplace = () => {
   const { data: sub_data } = useSubscription(INVENTORY_SUBSCRIPTION);
   const { data: inventory } = useQuery(INVENTORY_QUERY, {
     skip: !!sub_data?.marketplace,

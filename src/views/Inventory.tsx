@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from '../components/header';
 import { graphql } from '../gql';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { Button } from '../components/button';
 import { useUserState } from '../state/user_state';
 
@@ -13,6 +13,21 @@ const QUERY_ITEMS = graphql(/* GraphQL */ `
       id
       owner {
         username
+      }
+    }
+  }
+`);
+
+const SUBSCRIPTION_ITEMS = graphql(/* GraphQL */ `
+  subscription MyInventorySubscription($userId: ID!) {
+    marketplace(userId: $userId) {
+      name
+      price
+      id
+      owner {
+        username
+        id
+        balance
       }
     }
   }
@@ -53,10 +68,17 @@ export const Inventory = () => {
     fetchPolicy: 'cache-and-network',
   });
 
-  const { data } = useQuery(QUERY_ITEMS, {
+  const { data: subData } = useSubscription(SUBSCRIPTION_ITEMS, {
     variables: { userId: String(user.id) },
+  });
+
+  const { data: firstData } = useQuery(QUERY_ITEMS, {
+    variables: { userId: String(user.id) },
+    skip: !!subData?.marketplace,
     fetchPolicy: 'cache-and-network',
   });
+
+  const data = subData?.marketplace ?? firstData?.itemListByUserId;
   const [mutation] = useMutation(SellItem);
   return (
     <div className="flex flex-col gap-12">
@@ -71,7 +93,7 @@ export const Inventory = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-3">
-        {data?.itemListByUserId?.map((item) => {
+        {data?.map((item) => {
           return (
             <div
               key={item.id}
@@ -94,7 +116,11 @@ export const Inventory = () => {
                 onClick={() =>
                   mutation({
                     variables: { itemId: item.id },
-                    refetchQueries: ['MyInventory', 'ItemsInventory'],
+                    refetchQueries: [
+                      'MyInventory',
+                      'ItemsInventory',
+                      'MyInventorySubscription',
+                    ],
                   })
                 }
               >

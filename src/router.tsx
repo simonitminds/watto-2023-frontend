@@ -4,7 +4,7 @@ import App from './App';
 import { Login } from './views/Login';
 import { Signup } from './views/Signup';
 import { Root } from './views/root';
-import { Items } from './views/Items';
+import { Marketplace } from './views/Marketplace';
 import { Types } from './views/Types';
 import { Models } from './views/Models';
 import { Inventory } from './views/Inventory';
@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/market',
-        element: <Items />,
+        element: <Marketplace />,
       },
       {
         path: '/inventory',
