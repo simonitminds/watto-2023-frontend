@@ -1,15 +1,27 @@
 import React from 'react';
 import { Header } from '../components/header';
 import { graphql } from '../gql';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import { Button } from '../components/button';
 
-const QUERY_ITEMS = graphql(/* GraphQL */ `
-  query Items {
-    itemListByUserId(userId: 1) {
+const INVENTORY_SUBSCRIPTION = graphql(/* GraphQL */ `
+  subscription InventorySubscription {
+    marketplace {
+      id
       name
       price
+      owner {
+        username
+      }
+    }
+  }
+`);
+const INVENTORY_QUERY = graphql(/* GraphQL */ `
+  query Inventory {
+    itemListByUserId(userId: "1") {
       id
+      name
+      price
       owner {
         username
       }
@@ -37,13 +49,17 @@ const BUY_ITEM = graphql(/* GraphQL */ `
 `);
 
 export const Items = () => {
-  const { data } = useQuery(QUERY_ITEMS);
+  const { data: sub_data } = useSubscription(INVENTORY_SUBSCRIPTION);
+  const { data: inventory } = useQuery(INVENTORY_QUERY, {
+    skip: !!sub_data?.marketplace,
+  });
   const [mutation] = useMutation(BUY_ITEM);
+  const data = sub_data?.marketplace ?? inventory?.itemListByUserId;
   return (
     <div className="flex flex-col gap-12">
       <Header>Items</Header>
       <div className="grid grid-cols-4 gap-3">
-        {data?.itemListByUserId?.map((item) => {
+        {data?.map((item) => {
           return (
             <div
               key={item.id}

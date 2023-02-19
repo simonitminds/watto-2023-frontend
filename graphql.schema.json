@@ -6,7 +6,9 @@
     "mutationType": {
       "name": "RootMutationType"
     },
-    "subscriptionType": null,
+    "subscriptionType": {
+      "name": "RootSubscriptionType"
+    },
     "types": [
       {
         "kind": "OBJECT",
@@ -1179,6 +1181,37 @@
                 "kind": "OBJECT",
                 "name": "User",
                 "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "RootSubscriptionType",
+        "description": null,
+        "fields": [
+          {
+            "name": "marketplace",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Item",
+                  "ofType": null
+                }
               }
             },
             "isDeprecated": false,
