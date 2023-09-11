@@ -1,4 +1,4 @@
 {
   "name": "Backend schema",
-  "schemaPath": "graphql.schema.json"
+  "schema": "http://localhost:4000"
 }

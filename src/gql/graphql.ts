@@ -12,51 +12,70 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /**
-   * The `Naive DateTime` scalar type represents a naive date and time without
-   * timezone. The DateTime appears in a JSON response as an ISO8601 formatted
-   * string.
-   */
-  NaiveDateTime: any;
 };
 
-export type RootMutationType = {
-  __typename?: 'RootMutationType';
-  signup?: Maybe<User>;
+export type BuyItemArgs = {
+  itemId: Scalars['ID'];
+  userId: Scalars['ID'];
+};
+
+export type Item = {
+  __typename?: 'Item';
+  id: Scalars['ID'];
+  saberPart?: Maybe<Scalars['String']>;
+};
+
+export type ItemArgs = {
+  partDescription?: InputMaybe<Scalars['String']>;
+  partName?: InputMaybe<Scalars['String']>;
+  saberPart?: InputMaybe<Scalars['String']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  /** @deprecated This is the root type */
+  _deprecated_field?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  /** @deprecated This is the root type */
+  _deprecated_field?: Maybe<Scalars['String']>;
+  first_user?: Maybe<User>;
+  user?: Maybe<User>;
 };
 
 
-export type RootMutationTypeSignupArgs = {
-  password?: InputMaybe<Scalars['String']>;
-  username?: InputMaybe<Scalars['String']>;
-};
-
-export type RootQueryType = {
-  __typename?: 'RootQueryType';
-  hello?: Maybe<Scalars['String']>;
-};
-
-
-export type RootQueryTypeHelloArgs = {
-  name?: InputMaybe<Scalars['String']>;
+export type QueryUserArgs = {
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
-  insertedAt?: Maybe<Scalars['NaiveDateTime']>;
-  name?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['NaiveDateTime']>;
-  username?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
 };
 
-export type SignupMutationVariables = Exact<{
+export type UserAuthInput = {
   username: Scalars['String'];
-  password: Scalars['String'];
-}>;
+};
+
+export type UserDetails = {
+  __typename?: 'UserDetails';
+  id: Scalars['ID'];
+  lastName?: Maybe<Scalars['String']>;
+};
+
+export type UserDetailsUpdateArgs = {
+  firstName?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']>;
+  lastName?: InputMaybe<Scalars['String']>;
+};
+
+export type First_UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SignupMutation = { __typename?: 'RootMutationType', signup?: { __typename?: 'User', id: string, name?: string | null, username?: string | null, insertedAt?: any | null } | null };
+export type First_UserQuery = { __typename?: 'Query', first_user?: { __typename?: 'User', id: string, username: string } | null };
 
 
-export const SignupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Signup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"insertedAt"}}]}}]}}]} as unknown as DocumentNode<SignupMutation, SignupMutationVariables>;
+export const First_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"First_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<First_UserQuery, First_UserQueryVariables>;
