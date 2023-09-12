@@ -36,10 +36,16 @@ export type ItemArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  Signup?: Maybe<User>;
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']>;
   createItem?: Maybe<Item>;
   login?: Maybe<User>;
+};
+
+
+export type MutationSignupArgs = {
+  input: UserAuthInput;
 };
 
 
@@ -94,5 +100,14 @@ export type First_UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type First_UserQuery = { __typename?: 'Query', first_user: { __typename?: 'User', id: string, username: string } };
 
+export type SingupOpreationMutationVariables = Exact<{
+  username: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SingupOpreationMutation = { __typename?: 'Mutation', Signup?: { __typename?: 'User', id: string, username: string } | null };
+
 
 export const First_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"First_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<First_UserQuery, First_UserQueryVariables>;
+export const SingupOpreationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SingupOpreation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<SingupOpreationMutation, SingupOpreationMutationVariables>;
