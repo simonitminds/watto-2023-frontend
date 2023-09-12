@@ -2,12 +2,21 @@ import React from 'react';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
-import FacebookImage from '/home/ehab/code/watto-2023-frontend/src/Images/facebook.jpg';
+import { useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
+
+const login = gql`
+  mutation TestLoging($username: String!, $password: String!) {
+    login(input: { username: $username, password: $password }) {
+      id
+      username
+    }
+  }
+`;
 
 export const Login = () => {
-  // const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION);
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [testLoginMutation] = useMutation(login);
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const attrs = {
@@ -16,9 +25,13 @@ export const Login = () => {
     };
     if (!attrs.username || !attrs.password) return;
 
-    console.log({
-      variables: attrs,
-    });
+    try {
+      const result = await testLoginMutation({ variables: attrs });
+
+      console.log('TestLogin result:', result);
+    } catch (error) {
+      console.error('TestLogin error:', error);
+    }
   };
 
   return (
