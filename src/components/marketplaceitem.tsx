@@ -13,7 +13,7 @@ export const MarketplaceItem = ({
   price,
 }: MarketplaceItemProps) => {
   return (
-    <div className="w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <img
         className="p-8 rounded-t-lg object-cover"
         src={emitter}
@@ -21,15 +21,14 @@ export const MarketplaceItem = ({
       />
       <div className="px-5 pb-5">
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          Cosmic Cascade Emitter
+          {partName}
         </h5>
         <p className="text-sm tracking-tight text-gray-900 dark:text-white">
-          Description bla Description bla Description bla Description bla
-          Description bla Description bla bla
+          {description}
         </p>
         <div className="flex items-center justify-between mt-2">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            $250
+            ${price}
           </span>
           <a
             href="#"
