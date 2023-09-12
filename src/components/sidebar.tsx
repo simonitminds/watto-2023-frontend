@@ -1,5 +1,6 @@
 import React from 'react';
 import { SidebarItem, SidebarProps } from './sidebaritem';
+
 import {
   BuildingStorefrontIcon,
   UserIcon,
