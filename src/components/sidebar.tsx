@@ -9,7 +9,7 @@ export const Sidebar = () => {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-        <ul>
+        <ul className="hover:font-semibold">
           <li>
             <Link
               to="/marketplace"
@@ -31,13 +31,11 @@ export const Sidebar = () => {
                 />
               </svg>
 
-              <span className="ml-3 text-xl hover:font-semibold">
-                Marketplace
-              </span>
+              <span className="ml-3 text-xl">Marketplace</span>
             </Link>
           </li>
         </ul>
-        <ul className="nav-menu-items">
+        <ul className="hover:font-semibold">
           <li className="mt-1">
             <Link
               to="/marketplace"
@@ -57,13 +55,11 @@ export const Sidebar = () => {
                 />
               </svg>
 
-              <span className="ml-3 text-xl hover:font-semibold">
-                Owned items
-              </span>
+              <span className="ml-3 text-xl">Owned items</span>
             </Link>
           </li>
         </ul>
-        <ul className="nav-menu-items">
+        <ul className="hover:font-semibold">
           <li className="mt-1">
             <Link
               to="/marketplace"
@@ -85,9 +81,7 @@ export const Sidebar = () => {
                 />
               </svg>
 
-              <span className="ml-3 text-xl hover:font-semibold">
-                Transactions
-              </span>
+              <span className="ml-3 text-xl">Transactions</span>
             </Link>
           </li>
         </ul>
