@@ -13,7 +13,7 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <div className="min-h-screen flex flex-col items-center justify-center min-w-screen bg-slate-600 text-white">
+      <div className="min-h-screen flex flex-col items-center justify-center min-w-screen bg-[#111827] text-white">
         <RouterProvider router={router} />
       </div>
     </ApolloProvider>

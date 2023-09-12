@@ -24,6 +24,7 @@ export type BuyItemArgs = {
 export type Item = {
   __typename?: 'Item';
   id: Scalars['ID']['output'];
+  partName?: Maybe<Scalars['String']['output']>;
   saberPart?: Maybe<Scalars['String']['output']>;
 };
 
@@ -43,13 +44,18 @@ export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
-  first_user: User;
+  first_user?: Maybe<User>;
+  getAllUserItemsById?: Maybe<Array<Maybe<Item>>>;
+};
+
+
+export type QueryGetAllUserItemsByIdArgs = {
+  input: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
-  money: Scalars['Int']['output'];
   username: Scalars['String']['output'];
 };
 
@@ -72,7 +78,7 @@ export type UserDetailsUpdateArgs = {
 export type First_UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type First_UserQuery = { __typename?: 'Query', first_user: { __typename?: 'User', id: string, username: string } };
+export type First_UserQuery = { __typename?: 'Query', first_user?: { __typename?: 'User', id: string, username: string } | null };
 
 
 export const First_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"First_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<First_UserQuery, First_UserQueryVariables>;
