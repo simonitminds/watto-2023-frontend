@@ -2,9 +2,23 @@ import React from 'react';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
+import { graphql } from '../gql';
+import { useMutation } from '@apollo/client';
+
+const LOGIN_MUTATION = graphql(`
+  mutation Login($auth: AuthInputObject!) {
+    login(auth: $auth) {
+      token
+      user {
+        id
+        username
+      }
+    }
+  }
+`);
 
 export const Login = () => {
-  // const [signup, { data, loading, error }] = useMutation(SIGNUP_MUTATION);
+  const [signup, { data, loading, error }] = useMutation(LOGIN_MUTATION);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,9 +29,7 @@ export const Login = () => {
     };
     if (!attrs.username || !attrs.password) return;
 
-    console.log({
-      variables: attrs,
-    });
+    signup({ variables: { auth: attrs } });
   };
 
   return (
@@ -29,9 +41,9 @@ export const Login = () => {
         <Button type="submit">Login</Button>
       </form>
 
-      {/* {loading && <div className="animate-spin ">.</div>}
+      {loading && <div className="animate-spin ">.</div>}
       {error && <div> {error.message} </div>}
-      {data && !error && <div> WELCOME beep boop {JSON.stringify(data)} </div>} */}
+      {data && !error && <div> WELCOME beep boop {JSON.stringify(data)} </div>}
     </div>
   );
 };
