@@ -24,7 +24,9 @@ export type BuyItemArgs = {
 export type Item = {
   __typename?: 'Item';
   id: Scalars['ID']['output'];
+  partDescription?: Maybe<Scalars['String']['output']>;
   partName?: Maybe<Scalars['String']['output']>;
+  price?: Maybe<Scalars['Float']['output']>;
   saberPart?: Maybe<Scalars['String']['output']>;
 };
 
