@@ -11,6 +11,8 @@ export const Marketplace = () => {
           <MarketplaceItem></MarketplaceItem>
           <MarketplaceItem></MarketplaceItem>
           <MarketplaceItem></MarketplaceItem>
+          <MarketplaceItem></MarketplaceItem>
+          <MarketplaceItem></MarketplaceItem>
         </div>
       </div>
     </>

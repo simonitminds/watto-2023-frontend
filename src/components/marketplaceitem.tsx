@@ -1,4 +1,5 @@
 import React from 'react';
+import emitter from './../images/aurora_emitter.png';
 
 export type MarketplaceItemProps = {
   partName: string;
@@ -12,15 +13,15 @@ export const MarketplaceItem = ({
   price,
 }: MarketplaceItemProps) => {
   return (
-    <div className="w-96 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="w-80 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <img
-        className="p-8 rounded-t-lg"
-        src="/docs/images/products/apple-watch.png"
+        className="p-8 rounded-t-lg object-cover"
+        src={emitter}
         alt="product image"
       />
       <div className="px-5 pb-5">
         <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-          Licensed Fresh Towels
+          Cosmic Cascade Emitter
         </h5>
         <p className="text-sm tracking-tight text-gray-900 dark:text-white">
           Description bla Description bla Description bla Description bla
