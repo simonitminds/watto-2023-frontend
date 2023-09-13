@@ -5,41 +5,43 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type BuyItemArgs = {
-  itemId: Scalars['ID'];
-  userId: Scalars['ID'];
+  itemId: Scalars['ID']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 export type Item = {
   __typename?: 'Item';
-  id: Scalars['ID'];
-  partDescription?: Maybe<Scalars['String']>;
-  partName: Scalars['String'];
-  price?: Maybe<Scalars['Float']>;
-  saberPart: Scalars['String'];
+  id: Scalars['ID']['output'];
+  partDescription?: Maybe<Scalars['String']['output']>;
+  partName: Scalars['String']['output'];
+  price?: Maybe<Scalars['Float']['output']>;
+  saberPart: Scalars['String']['output'];
 };
 
 export type ItemArgs = {
-  partDescription?: InputMaybe<Scalars['String']>;
-  partName: Scalars['String'];
-  price?: InputMaybe<Scalars['Int']>;
-  saberPart: Scalars['String'];
+  partDescription?: InputMaybe<Scalars['String']['input']>;
+  partName: Scalars['String']['input'];
+  price?: InputMaybe<Scalars['Int']['input']>;
+  saberPart: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   Signup?: Maybe<User>;
   /** @deprecated This is the root type */
-  _deprecated_field?: Maybe<Scalars['String']>;
+  _deprecated_field?: Maybe<Scalars['String']['output']>;
   createItem?: Maybe<Item>;
   login?: Maybe<User>;
   updateItemUserIdById?: Maybe<Item>;
@@ -63,8 +65,8 @@ export type MutationLoginArgs = {
 
 
 export type MutationUpdateItemUserIdByIdArgs = {
-  newUserId: Scalars['String'];
-  partname: Scalars['String'];
+  newUserId: Scalars['String']['input'];
+  partname: Scalars['String']['input'];
 };
 
 
@@ -75,7 +77,7 @@ export type MutationUpdateUserDetailsArgs = {
 export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
-  _deprecated_field?: Maybe<Scalars['String']>;
+  _deprecated_field?: Maybe<Scalars['String']['output']>;
   first_user: User;
   getAllUserItemsById: Array<Item>;
   users: Array<User>;
@@ -83,43 +85,58 @@ export type Query = {
 
 
 export type QueryGetAllUserItemsByIdArgs = {
-  userId: Scalars['String'];
+  userId: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID'];
-  money: Scalars['Int'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  money: Scalars['Int']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UserAuthInput = {
-  password: Scalars['String'];
-  username: Scalars['String'];
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 export type UserDetails = {
   __typename?: 'UserDetails';
-  id: Scalars['ID'];
-  lastName?: Maybe<Scalars['String']>;
+  id: Scalars['ID']['output'];
+  lastName?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserDetailsUpdateArgs = {
-  firstName?: InputMaybe<Scalars['String']>;
-  id: Scalars['String'];
-  lastName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+  lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GetAllUserItemsByIdQueryVariables = Exact<{
-  input: Scalars['String'];
+  input: Scalars['String']['input'];
 }>;
 
 
 export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null }> };
 
 export type SingupOpreationMutationVariables = Exact<{
-  username: Scalars['String'];
-  password: Scalars['String'];
+  username: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 }>;
 
+
+export type SingupOpreationMutation = { __typename?: 'Mutation', Signup?: { __typename?: 'User', id: string, username: string } | null };
+
+export type AddtoUserDetailesMutationVariables = Exact<{
+  firstname: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+}>;
+
+
+export type AddtoUserDetailesMutation = { __typename?: 'Mutation', updateUserDetails?: { __typename?: 'UserDetails', id: string, lastName?: string | null } | null };
+
+
 export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;
+export const SingupOpreationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SingupOpreation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"Signup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<SingupOpreationMutation, SingupOpreationMutationVariables>;
+export const AddtoUserDetailesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddtoUserDetailes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"firstname"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastname"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserDetails"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"firstName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"firstname"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"lastName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastname"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}}]}}]} as unknown as DocumentNode<AddtoUserDetailesMutation, AddtoUserDetailesMutationVariables>;
