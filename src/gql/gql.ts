@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n": types.First_UserDocument,
     "\n  mutation Login($auth: AuthInputObject!) {\n    login(auth: $auth) {\n      token\n      user {\n        id\n        username\n      }\n    }\n  }\n": types.LoginDocument,
+    "\n  fragment MarketplaceItem on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n": types.MarketplaceItemFragmentDoc,
+    "\n  subscription marketplace_items {\n    marketplace {\n      id\n      ...MarketplaceItem\n    }\n  }\n": types.Marketplace_ItemsDocument,
 };
 
 /**
@@ -39,6 +41,14 @@ export function graphql(source: "\n  query First_user {\n    first_user {\n     
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation Login($auth: AuthInputObject!) {\n    login(auth: $auth) {\n      token\n      user {\n        id\n        username\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation Login($auth: AuthInputObject!) {\n    login(auth: $auth) {\n      token\n      user {\n        id\n        username\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  fragment MarketplaceItem on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n"): (typeof documents)["\n  fragment MarketplaceItem on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  subscription marketplace_items {\n    marketplace {\n      id\n      ...MarketplaceItem\n    }\n  }\n"): (typeof documents)["\n  subscription marketplace_items {\n    marketplace {\n      id\n      ...MarketplaceItem\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

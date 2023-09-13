@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
@@ -31,6 +31,13 @@ export const Login = () => {
 
     signup({ variables: { auth: attrs } });
   };
+
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem('token', data.login.token);
+      window.location.href = '/';
+    }
+  }, [data]);
 
   return (
     <div className="flex flex-col gap-3">
