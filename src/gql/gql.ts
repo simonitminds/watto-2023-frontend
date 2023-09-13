@@ -13,7 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
+    "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n": types.ItemFragmentFragmentDoc,
+    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
 };
 
 /**
@@ -33,7 +34,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"];
+export function graphql(source: "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n"): (typeof documents)["\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

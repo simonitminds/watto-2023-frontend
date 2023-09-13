@@ -32,20 +32,34 @@ export type Item = {
 
 export type ItemArgs = {
   partDescription?: InputMaybe<Scalars['String']['input']>;
-  partName?: InputMaybe<Scalars['String']['input']>;
-  saberPart?: InputMaybe<Scalars['String']['input']>;
+  partName: Scalars['String']['input'];
+  price?: InputMaybe<Scalars['Int']['input']>;
+  saberPart: Scalars['String']['input'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
+  createItem?: Maybe<Item>;
+  login?: Maybe<User>;
+};
+
+
+export type MutationCreateItemArgs = {
+  input: ItemArgs;
+};
+
+
+export type MutationLoginArgs = {
+  input: UserAuthInput;
 };
 
 export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
+  first_user: User;
   getAllUserItemsById: Array<Item>;
 };
 
@@ -57,10 +71,12 @@ export type QueryGetAllUserItemsByIdArgs = {
 export type User = {
   __typename?: 'User';
   id: Scalars['ID']['output'];
+  money: Scalars['Int']['output'];
   username: Scalars['String']['output'];
 };
 
 export type UserAuthInput = {
+  password: Scalars['String']['input'];
   username: Scalars['String']['input'];
 };
 
@@ -76,12 +92,17 @@ export type UserDetailsUpdateArgs = {
   lastName?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ItemFragmentFragment = { __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number } & { ' $fragmentName'?: 'ItemFragmentFragment' };
+
 export type GetAllUserItemsByIdQueryVariables = Exact<{
   input: Scalars['String']['input'];
 }>;
 
 
-export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number }> };
+export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<(
+    { __typename?: 'Item', id: string }
+    & { ' $fragmentRefs'?: { 'ItemFragmentFragment': ItemFragmentFragment } }
+  )> };
 
-
-export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;
+export const ItemFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]} as unknown as DocumentNode<ItemFragmentFragment, unknown>;
+export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ItemFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ItemFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Item"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;
