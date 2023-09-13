@@ -4,6 +4,7 @@ import App from './App';
 import { Login } from './views/Login';
 import { Signup } from './views/Signup';
 import { Marketplace } from './views/Marketplace';
+import { OwnedItems } from './views/OwnedItems';
 
 export const router = createBrowserRouter([
   {
@@ -21,5 +22,9 @@ export const router = createBrowserRouter([
   {
     path: '/marketplace',
     element: <Marketplace />,
+  },
+  {
+    path: '/OwnedItems',
+    element: <OwnedItems />,
   },
 ]);
