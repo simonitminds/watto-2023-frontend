@@ -21,11 +21,11 @@ export type BuyItemArgs = {
 
 export type Item = {
   __typename?: 'Item';
-  id: Scalars['ID']['output'];
-  partDescription?: Maybe<Scalars['String']['output']>;
-  partName: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
-  saberPart: Scalars['String']['output'];
+  id: Scalars['ID'];
+  partDescription?: Maybe<Scalars['String']>;
+  partName: Scalars['String'];
+  price?: Maybe<Scalars['Float']>;
+  saberPart: Scalars['String'];
 };
 
 export type ItemArgs = {
@@ -37,12 +37,18 @@ export type ItemArgs = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  Signup?: Maybe<User>;
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']>;
   createItem?: Maybe<Item>;
   login?: Maybe<User>;
-  updateItemById?: Maybe<Item>;
+  updateItemUserIdById?: Maybe<Item>;
   updateUserDetails?: Maybe<UserDetails>;
+};
+
+
+export type MutationSignupArgs = {
+  input: UserAuthInput;
 };
 
 
@@ -56,7 +62,7 @@ export type MutationLoginArgs = {
 };
 
 
-export type MutationUpdateItemByIdArgs = {
+export type MutationUpdateItemUserIdByIdArgs = {
   newUserId: Scalars['String'];
   partname: Scalars['String'];
 };
@@ -69,19 +75,22 @@ export type MutationUpdateUserDetailsArgs = {
 export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
-  _deprecated_field?: Maybe<Scalars['String']['output']>;
+  _deprecated_field?: Maybe<Scalars['String']>;
+  first_user: User;
   getAllUserItemsById: Array<Item>;
+  users: Array<User>;
 };
 
 
 export type QueryGetAllUserItemsByIdArgs = {
-  userId: Scalars['String']['input'];
+  userId: Scalars['String'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID']['output'];
-  username: Scalars['String']['output'];
+  id: Scalars['ID'];
+  money: Scalars['Int'];
+  username: Scalars['String'];
 };
 
 export type UserAuthInput = {
@@ -102,15 +111,20 @@ export type UserDetailsUpdateArgs = {
 };
 
 export type GetAllUserItemsByIdQueryVariables = Exact<{
-  input: Scalars['String']['input'];
+  input: Scalars['String'];
 }>;
 
 
-export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number }> };
+export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null }> };
 
 export type TestLogingMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
 }>;
 
+
+export type TestLogingMutation = { __typename?: 'Mutation', login?: { __typename?: 'User', id: string, username: string } | null };
+
+
 export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;
+export const TestLogingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TestLoging"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<TestLogingMutation, TestLogingMutationVariables>;

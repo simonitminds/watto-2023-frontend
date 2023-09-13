@@ -14,7 +14,6 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
-    "\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n": types.First_UserDocument,
     "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n": types.TestLogingDocument,
 };
 
@@ -35,7 +34,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n"): (typeof documents)["\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n"];
+export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
