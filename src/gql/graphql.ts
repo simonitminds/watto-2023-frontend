@@ -117,11 +117,6 @@ export type GetAllUserItemsByIdQueryVariables = Exact<{
 
 export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price?: number | null }> };
 
-export type TestLogingMutationVariables = Exact<{
-  username: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
 
 export type TestLogingMutation = { __typename?: 'Mutation', login?: { __typename?: 'User', id: string, username: string } | null };
 
