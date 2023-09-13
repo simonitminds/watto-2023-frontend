@@ -4,6 +4,9 @@ import { MarketplaceItem } from '../components/marketplaceitem';
 import { graphql } from './../gql';
 import { useQuery } from '@apollo/client';
 import { Spinner } from '../components/spinner';
+import { isLogin } from '../State';
+import { makeVar, useReactiveVar } from '@apollo/client';
+import { Link, useNavigate } from 'react-router-dom';
 
 const GET_MARKET_ITEMS_QUERY = graphql(`
   query GetAllUserItemsById {
@@ -15,6 +18,10 @@ const GET_MARKET_ITEMS_QUERY = graphql(`
 `);
 
 export const Marketplace = () => {
+  const navigate = useNavigate();
+  if (!useReactiveVar(isLogin)) {
+    navigate('/login');
+  }
   const userDataString = localStorage.getItem('userData');
   if (!userDataString) return console.log('cannot get the data');
   const userData = JSON.parse(userDataString);
