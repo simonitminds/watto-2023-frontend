@@ -4,7 +4,7 @@ import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { graphql } from '../gql';
 
 const SingupOpreation = graphql(`
@@ -34,6 +34,7 @@ export const Signup = () => {
   const [SignupMutation] = useMutation(SingupOpreation);
   const [AddtoUserDetailes] = useMutation(updateUserDetailsOpreation);
   const [passwordMatchError, setPasswordMatchError] = useState('');
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -76,6 +77,8 @@ export const Signup = () => {
 
     console.log('Signup result:', result);
     console.log('Signup result:', UserDetails);
+
+    navigate('/login');
   };
 
   return (
