@@ -5,18 +5,34 @@ import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
+import { graphql } from '../gql';
 
-const SingupOpreation = gql`
+const SingupOpreation = graphql(`
   mutation SingupOpreation($username: String!, $password: String!) {
     Signup(input: { username: $username, password: $password }) {
       id
       username
     }
   }
-`;
+`);
+const updateUserDetailsOpreation = graphql(`
+  mutation AddtoUserDetailes(
+    $firstname: String!
+    $lastname: String!
+    $id: String!
+  ) {
+    updateUserDetails(
+      input: { firstName: $firstname, lastName: $lastname, id: $id }
+    ) {
+      id
+      lastName
+    }
+  }
+`);
 
 export const Signup = () => {
   const [SignupMutation] = useMutation(SingupOpreation);
+  const [AddtoUserDetailes] = useMutation(updateUserDetailsOpreation);
   const [passwordMatchError, setPasswordMatchError] = useState('');
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +41,8 @@ export const Signup = () => {
     const attrs = {
       username: data.get('username') as string,
       password: data.get('password') as string,
+      firstname: data.get('firstname') as string,
+      lastname: data.get('lastname') as string,
       renterPassword: data.get('renterPassword') as string,
     };
     if (!attrs.username || !attrs.password) return;
@@ -45,8 +63,19 @@ export const Signup = () => {
         password: attrs.password,
       },
     });
+    const userIdFromSignup = result.data?.Signup?.id;
+    if (!userIdFromSignup) return;
+
+    const UserDetails = await AddtoUserDetailes({
+      variables: {
+        firstname: attrs.firstname,
+        lastname: attrs.lastname,
+        id: userIdFromSignup,
+      },
+    });
 
     console.log('Signup result:', result);
+    console.log('Signup result:', UserDetails);
   };
 
   return (
@@ -63,7 +92,18 @@ export const Signup = () => {
           name="username"
           placeholder="The_big_dark_king"
         ></Input>
-
+        <Input
+          label="First Name"
+          type="text"
+          name="firstname"
+          placeholder="Dark"
+        ></Input>
+        <Input
+          label="Last Name"
+          type="text"
+          name="lastname"
+          placeholder="Knight"
+        ></Input>
         <Input
           label="Password"
           type="password"
