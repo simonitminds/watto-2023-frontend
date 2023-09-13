@@ -3,21 +3,38 @@ import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { Link, useNavigate } from 'react-router-dom';
 import { graphql } from '../gql';
-import { json } from 'react-router-dom';
 
-const login = graphql(`
-  mutation TestLoging($username: String!, $password: String!) {
-    login(input: { username: $username, password: $password }) {
+const SingupOpreation = graphql(`
+  mutation SingupOpreation($username: String!, $password: String!) {
+    Signup(input: { username: $username, password: $password }) {
       id
       username
     }
   }
 `);
+const updateUserDetailsOpreation = graphql(`
+  mutation AddtoUserDetailes(
+    $firstname: String!
+    $lastname: String!
+    $id: String!
+  ) {
+    updateUserDetails(
+      input: { firstName: $firstname, lastName: $lastname, id: $id }
+    ) {
+      id
+      lastName
+    }
+  }
+`);
 
-export const Login = () => {
-  const [testLoginMutation, { data, error }] = useMutation(login);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+export const Signup = () => {
+  const [SignupMutation] = useMutation(SingupOpreation);
+  const [AddtoUserDetailes] = useMutation(updateUserDetailsOpreation);
+  const [passwordMatchError, setPasswordMatchError] = useState('');
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,61 +42,95 @@ export const Login = () => {
     const attrs = {
       username: data.get('username') as string,
       password: data.get('password') as string,
+      firstname: data.get('firstname') as string,
+      lastname: data.get('lastname') as string,
+      renterPassword: data.get('renterPassword') as string,
     };
     if (!attrs.username || !attrs.password) return;
+    console.log(attrs.password);
+    console.log(attrs.renterPassword);
 
-    const result = await testLoginMutation({ variables: attrs });
+    if (attrs.password !== attrs.renterPassword) {
+      setPasswordMatchError("Passwords don't match");
+      console.log('PASSWORDS DOES NOT MATCH');
 
-    try {
-      const result = await testLoginMutation({ variables: attrs });
-
-      console.log('TestLogin result:', result);
-
-      localStorage.setItem('userData', JSON.stringify(result));
-
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.error('TestLogin error:', error);
+      return;
+    } else {
+      setPasswordMatchError('');
     }
+    const result = await SignupMutation({
+      variables: {
+        username: attrs.username,
+        password: attrs.password,
+      },
+    });
+    const userIdFromSignup = result.data?.Signup?.id;
+    if (!userIdFromSignup) return;
+
+    const UserDetails = await AddtoUserDetailes({
+      variables: {
+        firstname: attrs.firstname,
+        lastname: attrs.lastname,
+        id: userIdFromSignup,
+      },
+    });
+
+    console.log('Signup result:', result);
+    console.log('Signup result:', UserDetails);
+
+    navigate('/login');
   };
 
   return (
-    <div className="flex flex-col gap-1">
-      <Header>Login</Header>
+    <div className="flex flex-col gap-2">
+      <Header>Create an account</Header>
+      <h1 className="text-center">Buy and sell with your friends</h1>
       <form
         onSubmit={onSubmit}
-        className="flex flex-col gap-6 max-w-xl mx-auto"
+        className="flex flex-col gap-3 max-w-xl mx-auto"
       >
         <Input
-          label="Username"
+          label="Create Username"
           type="text"
           name="username"
-          placeholder="dark_the_big"
+          placeholder="The_big_dark_king"
+        ></Input>
+        <Input
+          label="First Name"
+          type="text"
+          name="firstname"
+          placeholder="Dark"
+        ></Input>
+        <Input
+          label="Last Name"
+          type="text"
+          name="lastname"
+          placeholder="Knight"
         ></Input>
         <Input
           label="Password"
           type="password"
           name="password"
           placeholder="Enter your Password"
-        ></Input>
-        <div className="flex items-center space-x-12">
-          <input type="checkbox" id="rememberMe" name="rememberMe" />
-          <label htmlFor="rememberMe">Remember Me</label>
+          className={`border-2 ${
+            passwordMatchError ? 'border-red-600 focus:border-red-800' : ''
+          } rounded-md p-1`}
+        />
 
-          {/* lave en link til den her, måske skal jeg lave en ny vindue */}
-          <a
-            href="/forgot-password"
-            className="text-red-500 hover:text-blue-700 transition-colors duration-300"
-          >
-            Forgot Password?
-          </a>
-        </div>
-        {error && (
-          <div className="text-red-500">
-            {error.message || 'An error occurred.'}
-          </div>
+        <Input
+          label="Password"
+          type="password"
+          name="renterPassword"
+          placeholder="Renter your Password"
+          className={`border-2 ${
+            passwordMatchError ? 'border-red-600 focus:border-red-800' : ''
+          } rounded-md p-1`}
+        />
+        {passwordMatchError && (
+          <div className="text-red-500 text-sm">{passwordMatchError}</div>
         )}
-        <Button type="submit">Login</Button>
+
+        <Button type="submit">Sign up</Button>
 
         {/* A horizontal line */}
         <div className="flex items-center my-1">
@@ -149,15 +200,16 @@ export const Login = () => {
           Login with Google
         </button>
         <div className="flex items-center space-x-12">
-          <label htmlFor="DoNotHaveAnaccount">Don't have an account</label>
+          <label htmlFor="DoNotHaveAnaccount">Already have an account</label>
 
-          {/* lave en link til den her, måske skal jeg lave en ny vindue */}
-          <a
-            href="/Signup"
-            className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
-          >
-            Sign Up
-          </a>
+          <Link to={'/login'}>
+            <a
+              href="/Login"
+              className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+            >
+              Login
+            </a>
+          </Link>
         </div>
       </form>
     </div>

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Header } from './components/header';
 import { Button } from './components/button';
-import { Link } from 'react-router-dom';
+import { graphql } from './gql';
+import { useQuery } from '@apollo/client';
+import { Login } from './views/Login';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
@@ -13,5 +16,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
