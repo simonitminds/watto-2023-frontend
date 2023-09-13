@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
+import { json } from 'react-router-dom';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
@@ -16,6 +17,8 @@ const login = graphql(`
 
 export const Login = () => {
   const [testLoginMutation, { data, error }] = useMutation(login);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -27,7 +30,17 @@ export const Login = () => {
 
     const result = await testLoginMutation({ variables: attrs });
 
-    console.log('TestLogin result:', result);
+    try {
+      const result = await testLoginMutation({ variables: attrs });
+
+      console.log('TestLogin result:', result);
+
+      localStorage.setItem('userData', JSON.stringify(result));
+
+      setIsLoggedIn(true);
+    } catch (error) {
+      console.error('TestLogin error:', error);
+    }
   };
 
   return (
@@ -61,6 +74,11 @@ export const Login = () => {
             Forgot Password?
           </a>
         </div>
+        {error && (
+          <div className="text-red-500">
+            {error.message || 'An error occurred.'}
+          </div>
+        )}
         <Button type="submit">Login</Button>
 
         {/* A horizontal line */}

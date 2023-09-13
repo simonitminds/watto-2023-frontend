@@ -40,6 +40,8 @@ export type Mutation = {
   _deprecated_field?: Maybe<Scalars['String']>;
   createItem?: Maybe<Item>;
   login?: Maybe<User>;
+  updateItemById?: Maybe<Item>;
+  updateUserDetails?: Maybe<UserDetails>;
 };
 
 
@@ -52,12 +54,24 @@ export type MutationLoginArgs = {
   input: UserAuthInput;
 };
 
+
+export type MutationUpdateItemByIdArgs = {
+  newUserId: Scalars['String'];
+  partname: Scalars['String'];
+};
+
+
+export type MutationUpdateUserDetailsArgs = {
+  input: UserDetailsUpdateArgs;
+};
+
 export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']>;
   first_user: User;
   getItemByName?: Maybe<Item>;
+  users: Array<User>;
 };
 
 
@@ -85,7 +99,7 @@ export type UserDetails = {
 
 export type UserDetailsUpdateArgs = {
   firstName?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['ID']>;
+  id: Scalars['String'];
   lastName?: InputMaybe<Scalars['String']>;
 };
 
