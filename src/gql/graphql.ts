@@ -21,10 +21,11 @@ export type BuyItemArgs = {
 
 export type Item = {
   __typename?: 'Item';
-  id: Scalars['ID'];
-  partDescription?: Maybe<Scalars['String']>;
-  price?: Maybe<Scalars['Float']>;
-  saberPart?: Maybe<Scalars['String']>;
+  id: Scalars['ID']['output'];
+  partDescription?: Maybe<Scalars['String']['output']>;
+  partName: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  saberPart: Scalars['String']['output'];
 };
 
 export type ItemArgs = {
@@ -68,22 +69,19 @@ export type MutationUpdateUserDetailsArgs = {
 export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
-  _deprecated_field?: Maybe<Scalars['String']>;
-  first_user: User;
-  getItemByName?: Maybe<Item>;
-  users: Array<User>;
+  _deprecated_field?: Maybe<Scalars['String']['output']>;
+  getAllUserItemsById: Array<Item>;
 };
 
 
-export type QueryGetItemByNameArgs = {
-  partName: Scalars['String'];
+export type QueryGetAllUserItemsByIdArgs = {
+  userId: Scalars['String']['input'];
 };
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['ID'];
-  money: Scalars['Int'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UserAuthInput = {
@@ -103,19 +101,16 @@ export type UserDetailsUpdateArgs = {
   lastName?: InputMaybe<Scalars['String']>;
 };
 
-export type First_UserQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllUserItemsByIdQueryVariables = Exact<{
+  input: Scalars['String']['input'];
+}>;
 
 
-export type First_UserQuery = { __typename?: 'Query', first_user: { __typename?: 'User', id: string, username: string } };
+export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number }> };
 
 export type TestLogingMutationVariables = Exact<{
   username: Scalars['String'];
   password: Scalars['String'];
 }>;
 
-
-export type TestLogingMutation = { __typename?: 'Mutation', login?: { __typename?: 'User', id: string, username: string } | null };
-
-
-export const First_UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"First_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"first_user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<First_UserQuery, First_UserQueryVariables>;
-export const TestLogingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"TestLoging"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}}]}}]} as unknown as DocumentNode<TestLogingMutation, TestLogingMutationVariables>;
+export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;

@@ -6,14 +6,6 @@ import { useQuery } from '@apollo/client';
 import { Login } from './views/Login';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-const watto_query = graphql(`
-  query First_user {
-    first_user {
-      id
-      username
-    }
-  }
-`);
 function App() {
   const { data } = useQuery(watto_query);
   console.log(data?.first_user?.id);
