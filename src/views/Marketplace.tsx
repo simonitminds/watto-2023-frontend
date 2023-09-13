@@ -20,8 +20,9 @@ export const Marketplace = () => {
           {data?.getAllUserItemsById?.map((Item) => {
             return (
               <MarketplaceItem
+                key={Item.id}
                 partName={Item?.partName}
-                description={Item?.partDescription}
+                description={Item?.partDescription?.substring(0, 250)}
                 price={Item?.price}
               ></MarketplaceItem>
             );

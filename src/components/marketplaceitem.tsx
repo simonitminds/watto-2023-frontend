@@ -2,18 +2,23 @@ import React from 'react';
 import emitter from './../images/aurora_emitter.png';
 
 export type MarketplaceItemProps = {
+  id: string;
   partName: string;
   description: string;
   price: number;
 };
 
 export const MarketplaceItem = ({
+  id,
   partName,
   description,
   price,
 }: MarketplaceItemProps) => {
   return (
-    <div className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+    <div
+      key={id}
+      className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col"
+    >
       <div className="h-[300px]">
         <img
           className="p-8 rounded-t-lg object-cover"
