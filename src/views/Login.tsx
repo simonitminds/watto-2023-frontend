@@ -9,14 +9,18 @@ import { json } from 'react-router-dom';
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
     login(input: { username: $username, password: $password }) {
-      id
-      username
+      user {
+        id
+        username
+        money
+      }
+      token
     }
   }
 `);
 
 export const Login = () => {
-  const [testLoginMutation, { data, error }] = useMutation(login);
+  const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,17 +34,11 @@ export const Login = () => {
 
     const result = await testLoginMutation({ variables: attrs });
 
-    try {
-      const result = await testLoginMutation({ variables: attrs });
+    console.log('TestLogin result:', result);
 
-      console.log('TestLogin result:', result);
+    localStorage.setItem('userData', JSON.stringify(result));
 
-      localStorage.setItem('userData', JSON.stringify(result));
-
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.error('TestLogin error:', error);
-    }
+    setIsLoggedIn(true);
   };
 
   return (

@@ -31,7 +31,8 @@ const updateUserDetailsOpreation = graphql(`
 `);
 
 export const Signup = () => {
-  const [SignupMutation] = useMutation(SingupOpreation);
+  const [SignupMutation, { loading, error, data }] =
+    useMutation(SingupOpreation);
   const [AddtoUserDetailes] = useMutation(updateUserDetailsOpreation);
   const [passwordMatchError, setPasswordMatchError] = useState('');
   const navigate = useNavigate();
@@ -131,7 +132,7 @@ export const Signup = () => {
         )}
 
         <Button type="submit">Sign up</Button>
-
+        {error && <p>Error! {error.message}</p>}
         {/* A horizontal line */}
         <div className="flex items-center my-1">
           <hr className="flex-grow border-t border-gray-300" />
