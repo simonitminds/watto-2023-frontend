@@ -145,9 +145,13 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "SCALAR",
-              "name": "Float",
-              "ofType": null
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Float",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -344,8 +348,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-<<<<<<< HEAD
-=======
           },
           {
             "name": "updateItemUserIdById",
@@ -420,7 +422,6 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
->>>>>>> dev
           }
         ],
         "inputFields": null,
