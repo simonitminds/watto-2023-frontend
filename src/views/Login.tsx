@@ -5,6 +5,7 @@ import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
 import { json } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
@@ -22,6 +23,7 @@ const login = graphql(`
 export const Login = () => {
   const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,6 +41,7 @@ export const Login = () => {
     localStorage.setItem('userData', JSON.stringify(result));
 
     setIsLoggedIn(true);
+    navigate('/marketplace');
   };
 
   return (
