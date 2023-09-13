@@ -13,9 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n": types.First_UserDocument,
-    "\n  mutation SingupOpreation($username: String!, $password: String!) {\n    Signup(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n": types.SingupOpreationDocument,
-    "\n  mutation AddtoUserDetailes(\n    $firstname: String!\n    $lastname: String!\n    $id: String!\n  ) {\n    updateUserDetails(\n      input: { firstName: $firstname, lastName: $lastname, id: $id }\n    ) {\n      id\n      lastName\n    }\n  }\n": types.AddtoUserDetailesDocument,
+    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
 };
 
 /**
@@ -35,15 +33,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n"): (typeof documents)["\n  query First_user {\n    first_user {\n      id\n      username\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  mutation SingupOpreation($username: String!, $password: String!) {\n    Signup(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n"): (typeof documents)["\n  mutation SingupOpreation($username: String!, $password: String!) {\n    Signup(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  mutation AddtoUserDetailes(\n    $firstname: String!\n    $lastname: String!\n    $id: String!\n  ) {\n    updateUserDetails(\n      input: { firstName: $firstname, lastName: $lastname, id: $id }\n    ) {\n      id\n      lastName\n    }\n  }\n"): (typeof documents)["\n  mutation AddtoUserDetailes(\n    $firstname: String!\n    $lastname: String!\n    $id: String!\n  ) {\n    updateUserDetails(\n      input: { firstName: $firstname, lastName: $lastname, id: $id }\n    ) {\n      id\n      lastName\n    }\n  }\n"];
+export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
