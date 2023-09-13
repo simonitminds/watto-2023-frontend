@@ -1,24 +1,22 @@
 import React from 'react';
 import emitter from './../images/aurora_emitter.png';
+import { FragmentType, graphql, useFragment } from './../gql';
 
-export type MarketplaceItemProps = {
-  id: string;
-  partName: string;
-  description?: string;
-  price: number;
-};
+export const GetMarketItems = graphql(`
+  fragment ItemFragment on Item {
+    id
+    partName
+    partDescription
+    price
+  }
+`);
 
-export const MarketplaceItem = ({
-  id,
-  partName,
-  description,
-  price,
-}: MarketplaceItemProps) => {
+export const MarketplaceItem = (props: {
+  items: FragmentType<typeof GetMarketItems>;
+}) => {
+  const item = useFragment(GetMarketItems, props.items);
   return (
-    <div
-      key={id}
-      className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col"
-    >
+    <div className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
       <div className="h-[300px]">
         <img
           className="p-8 rounded-t-lg object-cover"
@@ -30,16 +28,16 @@ export const MarketplaceItem = ({
       <div className="px-5 px-5 flex flex-col justify-between flex-grow">
         <div>
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {partName}
+            {item.partName}
           </h5>
           <p className="text-sm tracking-tight text-gray-900 dark:text-white">
-            {description}
+            {item.partDescription?.slice(0, 260)}
           </p>
         </div>
         <div className="mb-4">
           <div className="flex items-center justify-between mt-2">
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
-              ${price}
+              ${item.price}
             </span>
             <a
               href="#"

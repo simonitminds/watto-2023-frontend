@@ -7,8 +7,6 @@ import { Login } from './views/Login';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 function App() {
-  const { data } = useQuery(watto_query);
-  console.log(data?.first_user?.id);
   return (
     <div className="App">
       <Header> Welcome </Header>
