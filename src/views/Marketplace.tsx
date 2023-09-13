@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/client';
 
 export const Marketplace = () => {
   const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY, {
-    variables: { input: 'clmeq4xqa0000kem9n98ibai2' },
+    variables: { input: 'clmhg4l5l0000ke3pp76cx98i' },
   });
 
   if (loading) return 'Loading...';
@@ -17,13 +17,14 @@ export const Marketplace = () => {
       <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
         <div className="flex flex-wrap gap-4 items-center ">
-          {data?.getAllUserItemsById?.map((Item) => {
+          {data?.getAllUserItemsById?.map((item) => {
             return (
               <MarketplaceItem
-                key={Item.id}
-                partName={Item?.partName}
-                description={Item?.partDescription?.substring(0, 250)}
-                price={Item?.price}
+                key={item.id}
+                id={item.id}
+                partName={item.partName}
+                description={item.partDescription?.substring(0, 250)}
+                price={item?.price}
               ></MarketplaceItem>
             );
           })}

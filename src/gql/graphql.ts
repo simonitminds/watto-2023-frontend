@@ -25,9 +25,9 @@ export type Item = {
   __typename?: 'Item';
   id: Scalars['ID']['output'];
   partDescription?: Maybe<Scalars['String']['output']>;
-  partName?: Maybe<Scalars['String']['output']>;
-  price?: Maybe<Scalars['Float']['output']>;
-  saberPart?: Maybe<Scalars['String']['output']>;
+  partName: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  saberPart: Scalars['String']['output'];
 };
 
 export type ItemArgs = {
@@ -46,12 +46,12 @@ export type Query = {
   __typename?: 'Query';
   /** @deprecated This is the root type */
   _deprecated_field?: Maybe<Scalars['String']['output']>;
-  getAllUserItemsById?: Maybe<Array<Maybe<Item>>>;
+  getAllUserItemsById: Array<Item>;
 };
 
 
 export type QueryGetAllUserItemsByIdArgs = {
-  input: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type User = {
@@ -81,7 +81,7 @@ export type GetAllUserItemsByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById?: Array<{ __typename?: 'Item', id: string, partName?: string | null, partDescription?: string | null, price?: number | null } | null> | null };
+export type GetAllUserItemsByIdQuery = { __typename?: 'Query', getAllUserItemsById: Array<{ __typename?: 'Item', id: string, partName: string, partDescription?: string | null, price: number }> };
 
 
-export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;
+export const GetAllUserItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllUserItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllUserItemsById"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"partName"}},{"kind":"Field","name":{"kind":"Name","value":"partDescription"}},{"kind":"Field","name":{"kind":"Name","value":"price"}}]}}]}}]} as unknown as DocumentNode<GetAllUserItemsByIdQuery, GetAllUserItemsByIdQueryVariables>;

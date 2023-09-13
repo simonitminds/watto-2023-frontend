@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(input: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
+    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(input: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(input: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"];
+export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      partName\n      partDescription\n      price\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

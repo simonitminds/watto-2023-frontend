@@ -4,7 +4,7 @@ import emitter from './../images/aurora_emitter.png';
 export type MarketplaceItemProps = {
   id: string;
   partName: string;
-  description: string;
+  description?: string;
   price: number;
 };
 
