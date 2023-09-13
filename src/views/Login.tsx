@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
 import { json } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
+import { isLogin } from '../State';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
@@ -36,11 +37,9 @@ export const Login = () => {
 
     const result = await testLoginMutation({ variables: attrs });
 
-    console.log('TestLogin result:', result);
+    localStorage.setItem('token', result.data?.login?.token || '');
 
-    localStorage.setItem('userData', JSON.stringify(result));
-
-    setIsLoggedIn(true);
+    isLogin(true);
     navigate('/marketplace');
   };
 

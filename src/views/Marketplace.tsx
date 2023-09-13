@@ -6,8 +6,8 @@ import { useQuery } from '@apollo/client';
 import { Spinner } from '../components/spinner';
 
 const GET_MARKET_ITEMS_QUERY = graphql(`
-  query GetAllUserItemsById($input: String!) {
-    getAllUserItemsById(userId: $input) {
+  query GetAllUserItemsById {
+    getAllUserItemsById {
       id
       ...ItemFragment
     }
@@ -15,9 +15,11 @@ const GET_MARKET_ITEMS_QUERY = graphql(`
 `);
 
 export const Marketplace = () => {
-  const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY, {
-    variables: { input: 'clmhg4l5l0000ke3pp76cx98i' },
-  });
+  const userDataString = localStorage.getItem('userData');
+  if (!userDataString) return console.log('cannot get the data');
+  const userData = JSON.parse(userDataString);
+
+  const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY);
 
   return (
     <>

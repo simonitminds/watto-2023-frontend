@@ -14,8 +14,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n  }\n": types.ItemFragmentFragmentDoc,
-    "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n": types.TestLogingDocument,
-    "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
+    "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n": types.TestLogingDocument,
+    "\n  query GetAllUserItemsById {\n    getAllUserItemsById {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetAllUserItemsByIdDocument,
     "\n  mutation SingupOpreation($username: String!, $password: String!) {\n    Signup(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n": types.SingupOpreationDocument,
     "\n  mutation AddtoUserDetailes(\n    $firstname: String!\n    $lastname: String!\n    $id: String!\n  ) {\n    updateUserDetails(\n      input: { firstName: $firstname, lastName: $lastname, id: $id }\n    ) {\n      id\n      lastName\n    }\n  }\n": types.AddtoUserDetailesDocument,
 };
@@ -41,15 +41,11 @@ export function graphql(source: "\n  fragment ItemFragment on Item {\n    id\n  
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n"): (typeof documents)["\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      id\n      username\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(source: "\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById($input: String!) {\n    getAllUserItemsById(userId: $input) {\n      id\n      ...ItemFragment\n    }\n  }\n"];
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
 export function graphql(source: "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n"): (typeof documents)["\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetAllUserItemsById {\n    getAllUserItemsById {\n      id\n      ...ItemFragment\n    }\n  }\n"): (typeof documents)["\n  query GetAllUserItemsById {\n    getAllUserItemsById {\n      id\n      ...ItemFragment\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
