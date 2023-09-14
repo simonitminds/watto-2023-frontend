@@ -4,9 +4,9 @@ import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { graphql } from '../gql';
-import { json } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { isLogin } from '../State';
+import { useEffect } from 'react';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
@@ -22,12 +22,10 @@ const login = graphql(`
 `);
 
 export const Login = () => {
-  const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const navigate = useNavigate();
+  const is_logged_in = useReactiveVar(isLogin);
 
-  if (useReactiveVar(isLogin)) {
-    navigate('/marketplace');
-  }
+  const [testLoginMutation, { loading, error, data }] = useMutation(login);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,7 +41,11 @@ export const Login = () => {
     localStorage.setItem('token', result.data?.login?.token || '');
 
     isLogin(true);
-    navigate('/marketplace');
+    useEffect(() => {
+      if (is_logged_in) {
+        navigate('/marketplace');
+      }
+    }, [navigate]);
   };
 
   return (
@@ -156,7 +158,7 @@ export const Login = () => {
 
           {/* lave en link til den her, måske skal jeg lave en ny vindue */}
           <a
-            href="/Signup"
+            href="/auth/Signup"
             className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
           >
             Sign Up
@@ -166,3 +168,4 @@ export const Login = () => {
     </div>
   );
 };
+export default Login;
