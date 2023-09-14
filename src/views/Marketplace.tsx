@@ -35,7 +35,7 @@ export const Marketplace = () => {
     <>
       <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
-        <div className="flex flex-wrap gap-4 items-center ">
+        <div className="flex flex-wrap gap-4 justify-center items-left ">
           {loading && <Spinner></Spinner>}
           {error && <p>Error! {error.message}</p>}
           {!loading &&

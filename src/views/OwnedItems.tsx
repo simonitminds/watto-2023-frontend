@@ -25,7 +25,7 @@ export const OwnedItems = () => {
     <>
       <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
-        <div className="flex flex-wrap gap-4 items-center ">
+        <div className="flex flex-wrap gap-4 justify-center items-center ">
           {loading && <Spinner></Spinner>}
           {error && <p>Error! {error.message}</p>}
           {!loading &&
