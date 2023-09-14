@@ -23,8 +23,9 @@ export const Marketplace = () => {
     navigate('/login');
   }
   const userDataString = localStorage.getItem('userData');
-  if (!userDataString) return console.log('cannot get the data');
-  const userData = JSON.parse(userDataString);
+  if (!userDataString) {
+    console.log('cannot get the data');
+  }
 
   const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY);
 
