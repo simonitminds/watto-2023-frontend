@@ -23,12 +23,7 @@ const login = graphql(`
 
 export const Login = () => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLogin()) {
-      navigate('/marketplace');
-    }
-  }, [navigate]);
+  const is_logged_in = useReactiveVar(isLogin);
 
   const [testLoginMutation, { loading, error, data }] = useMutation(login);
 
@@ -46,7 +41,11 @@ export const Login = () => {
     localStorage.setItem('token', result.data?.login?.token || '');
 
     isLogin(true);
-    navigate('/marketplace');
+    useEffect(() => {
+      if (is_logged_in) {
+        navigate('/marketplace');
+      }
+    }, [navigate]);
   };
 
   return (
@@ -159,7 +158,7 @@ export const Login = () => {
 
           {/* lave en link til den her, måske skal jeg lave en ny vindue */}
           <a
-            href="/Signup"
+            href="/auth/Signup"
             className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
           >
             Sign Up

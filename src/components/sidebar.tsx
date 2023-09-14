@@ -18,22 +18,16 @@ export const Sidebar = () => {
       icon: <BuildingStorefrontIcon />,
       text: 'Marketplace',
     },
-    { to: '/owneditems', icon: <UserIcon />, text: 'Owned items' },
+    { to: '/marketplace/OwnedItems', icon: <UserIcon />, text: 'Owned items' },
     {
       to: '/transactions',
       icon: <ArchiveBoxIcon />,
       text: 'Transactions',
     },
-    {
-      to: 'login',
-      icon: <ArchiveBoxIcon></ArchiveBoxIcon>,
-      text: 'Logout',
-    },
   ];
 
   function handleLogout(): void {
     localStorage.removeItem('token');
-    // window.location.reload();
     isLogin(false);
   }
   return (
