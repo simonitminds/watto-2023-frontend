@@ -4,9 +4,9 @@ import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { graphql } from '../gql';
-import { json } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import { isLogin } from '../State';
+import { useEffect } from 'react';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
@@ -22,12 +22,15 @@ const login = graphql(`
 `);
 
 export const Login = () => {
-  const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const navigate = useNavigate();
 
-  if (useReactiveVar(isLogin)) {
-    navigate('/marketplace');
-  }
+  useEffect(() => {
+    if (isLogin()) {
+      navigate('/marketplace');
+    }
+  }, [navigate]);
+
+  const [testLoginMutation, { loading, error, data }] = useMutation(login);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -166,3 +169,4 @@ export const Login = () => {
     </div>
   );
 };
+export default Login;
