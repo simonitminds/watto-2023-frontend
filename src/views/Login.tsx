@@ -5,19 +5,26 @@ import { Input } from '../components/input';
 import { useMutation } from '@apollo/client';
 import { graphql } from '../gql';
 import { json } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { isLogin } from '../State';
 
 const login = graphql(`
   mutation TestLoging($username: String!, $password: String!) {
     login(input: { username: $username, password: $password }) {
-      id
-      username
+      user {
+        id
+        username
+        money
+      }
+      token
     }
   }
 `);
 
 export const Login = () => {
-  const [testLoginMutation, { data, error }] = useMutation(login);
+  const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,17 +37,10 @@ export const Login = () => {
 
     const result = await testLoginMutation({ variables: attrs });
 
-    try {
-      const result = await testLoginMutation({ variables: attrs });
+    localStorage.setItem('token', result.data?.login?.token || '');
 
-      console.log('TestLogin result:', result);
-
-      localStorage.setItem('userData', JSON.stringify(result));
-
-      setIsLoggedIn(true);
-    } catch (error) {
-      console.error('TestLogin error:', error);
-    }
+    isLogin(true);
+    navigate('/marketplace');
   };
 
   return (
