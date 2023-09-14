@@ -41,11 +41,6 @@ export const Login = () => {
     localStorage.setItem('token', result.data?.login?.token || '');
 
     isLogin(true);
-    useEffect(() => {
-      if (is_logged_in) {
-        navigate('/marketplace');
-      }
-    }, [navigate]);
   };
 
   return (
