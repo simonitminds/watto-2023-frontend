@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { graphql } from '../gql';
 import { json } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,6 +25,10 @@ export const Login = () => {
   const [testLoginMutation, { loading, error, data }] = useMutation(login);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  if (useReactiveVar(isLogin)) {
+    navigate('/marketplace');
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

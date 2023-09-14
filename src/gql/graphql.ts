@@ -17,7 +17,6 @@ export type Scalars = {
 };
 
 export type BuyItemArgs = {
-  buyerId: Scalars['ID']['input'];
   itemId: Scalars['ID']['input'];
   sellerId: Scalars['ID']['input'];
 };
