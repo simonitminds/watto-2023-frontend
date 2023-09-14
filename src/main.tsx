@@ -22,6 +22,9 @@ const wsLink = new GraphQLWsLink(
 );
 const httpLink = new HttpLink({
   uri: 'http://localhost:4000/',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+  },
 });
 
 const splitLink = split(
@@ -47,9 +50,7 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <div className="min-h-screen flex flex-col items-center justify-center min-w-screen bg-slate-600 text-white">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
     </ApolloProvider>
   </React.StrictMode>,
 );

@@ -4,9 +4,12 @@ type ButtonProps = {
   children: ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-export const Button = ({ children }: ButtonProps) => {
+export const Button = ({ children, ...rest }: ButtonProps) => {
   return (
-    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <button
+      {...rest}
+      className="bg-slate-500 hover:bg-slate-700 text-slate-100 font-bold py-2 px-4 rounded"
+    >
       {children}
     </button>
   );

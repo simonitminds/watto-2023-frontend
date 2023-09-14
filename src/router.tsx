@@ -1,20 +1,31 @@
 import { createBrowserRouter } from 'react-router-dom';
 import React from 'react';
-import App from './App';
 import { Login } from './views/Login';
 import { Marketplace } from './views/marketplace';
+import { Layout } from './layout';
+import { MyItems } from './views/MyItems';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
-  },
-  {
-    path: '/login',
     element: <Login />,
   },
   {
     path: '/marketplace',
-    element: <Marketplace />,
+    element: <Layout />,
+    children: [
+      {
+        path: '',
+        element: <Marketplace />,
+      },
+      {
+        path: 'settings',
+        element: <Marketplace />,
+      },
+      {
+        path: 'my-items',
+        element: <MyItems />,
+      },
+    ],
   },
 ]);

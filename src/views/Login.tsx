@@ -3,7 +3,9 @@ import { Header } from '../components/header';
 import { Button } from '../components/button';
 import { Input } from '../components/input';
 import { graphql } from '../gql';
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { isLoggedIn } from '../state/loggedIn';
 
 const LOGIN_MUTATION = graphql(`
   mutation Login($auth: AuthInputObject!) {
@@ -19,6 +21,8 @@ const LOGIN_MUTATION = graphql(`
 
 export const Login = () => {
   const [signup, { data, loading, error }] = useMutation(LOGIN_MUTATION);
+  const navigate = useNavigate();
+  const is_logged_in = useReactiveVar(isLoggedIn);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,6 +42,12 @@ export const Login = () => {
       window.location.href = '/';
     }
   }, [data]);
+
+  useEffect(() => {
+    if (is_logged_in) {
+      navigate('/marketplace');
+    }
+  }, [is_logged_in, navigate]);
 
   return (
     <div className="flex flex-col gap-3">
