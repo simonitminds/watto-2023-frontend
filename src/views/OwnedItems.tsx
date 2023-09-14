@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Sidebar } from '../components/sidebar';
-import { MarketplaceItem } from '../components/marketplaceitem';
+import { OwnItem } from '../components/ownitem';
 import { graphql } from './../gql';
 import { useQuery } from '@apollo/client';
 import { Spinner } from '../components/spinner';
@@ -15,7 +15,11 @@ const GET_USER_ITEMS_QUERY = graphql(`
 `);
 
 export const OwnedItems = () => {
-  const { loading, error, data } = useQuery(GET_USER_ITEMS_QUERY);
+  const { loading, error, data, refetch } = useQuery(GET_USER_ITEMS_QUERY);
+
+  useEffect(() => {
+    refetch();
+  });
 
   return (
     <>
@@ -26,7 +30,7 @@ export const OwnedItems = () => {
           {error && <p>Error! {error.message}</p>}
           {!loading &&
             data?.getUserItems?.map((item) => (
-              <MarketplaceItem key={item.id} items={item} />
+              <OwnItem key={item.id} items={item} />
             ))}
         </div>
       </div>

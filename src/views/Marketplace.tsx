@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Sidebar } from '../components/sidebar';
 import { MarketplaceItem } from '../components/marketplaceitem';
 import { graphql } from './../gql';
@@ -27,8 +27,10 @@ export const Marketplace = () => {
   //   console.log('cannot get the data');
   // }
 
-  const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY);
-
+  const { loading, error, data, refetch } = useQuery(GET_MARKET_ITEMS_QUERY);
+  useEffect(() => {
+    refetch();
+  });
   return (
     <>
       <Sidebar></Sidebar>
