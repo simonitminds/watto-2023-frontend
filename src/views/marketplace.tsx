@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { graphql } from '../gql';
-import { useSubscription } from '@apollo/client';
+import { useMutation, useSubscription } from '@apollo/client';
 import MarketplaceItem from './MarketplaceItem';
 
 export const marketplace_items = graphql(`
@@ -12,8 +12,18 @@ export const marketplace_items = graphql(`
   }
 `);
 
+export const buy_item = graphql(`
+  mutation BuyItem($item_id: String!) {
+    trade_item(item_id: $item_id) {
+      id
+      money
+    }
+  }
+`);
+
 export const Marketplace: FC = () => {
   const { data, loading } = useSubscription(marketplace_items);
+  const [mutation] = useMutation(buy_item);
   return (
     <div className="flex flex-col gap-3">
       {loading && <div className="animate-spin ">.</div>}
@@ -24,7 +34,10 @@ export const Marketplace: FC = () => {
           !loading &&
           data.marketplace.map((item) => (
             <MarketplaceItem
-              buttonData={{ onClick: console.log, text: 'Buy' }}
+              buttonData={{
+                onClick: () => mutation({ variables: { item_id: item.id } }),
+                text: 'Buy',
+              }}
               item={item}
               key={item.id}
             />

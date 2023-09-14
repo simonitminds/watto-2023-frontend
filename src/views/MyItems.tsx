@@ -22,7 +22,10 @@ const SellItemMutation = graphql(`
 `);
 
 export const MyItems = () => {
-  const { data, loading } = useQuery(MyItemsQuery);
+  const { data, loading } = useQuery(MyItemsQuery, {
+    initialFetchPolicy: 'network-only',
+  });
+
   const [mutation] = useMutation(SellItemMutation, {
     refetchQueries: ['MyItems'],
   });
