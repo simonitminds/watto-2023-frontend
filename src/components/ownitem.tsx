@@ -35,10 +35,16 @@ export const OwnItem = (props: { items: FragmentType<typeof GetUserItem> }) => {
   });
 
   return (
-    <div className="w-72 h-[400px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-      <img className="scale-75" src={emitter} alt="product image" />
+    <div className="w-72 h-[250px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col flex justify-center items-center">
+      <div className="h-[150px]">
+        <img
+          className=" rounded-t-lg object-cover h-full w-fill "
+          src={emitter}
+          alt="product image"
+        />
+      </div>
 
-      <div className="px-5 px-5 flex flex-col justify-between flex-grow">
+      <div className="px-5 w-72 px-5 flex flex-col justify-between flex-grow">
         <div>
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {item.partName}
