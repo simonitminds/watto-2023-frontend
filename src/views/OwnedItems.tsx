@@ -15,9 +15,7 @@ const GET_USER_ITEMS_QUERY = graphql(`
 `);
 
 export const OwnedItems = () => {
-  const { loading, error, data } = useQuery(GET_USER_ITEMS_QUERY, {
-    variables: { input: 'clmhg4l5l0000ke3pp76cx98i' },
-  });
+  const { loading, error, data } = useQuery(GET_USER_ITEMS_QUERY);
 
   return (
     <>
