@@ -285,7 +285,7 @@
             ],
             "type": {
               "kind": "OBJECT",
-              "name": "User",
+              "name": "UserWithToken",
               "ofType": null
             },
             "isDeprecated": false,

@@ -6,12 +6,15 @@ import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import { graphql } from '../gql';
+import { isLogin } from '../State';
 
 const SingupOpreation = graphql(`
   mutation SingupOpreation($username: String!, $password: String!) {
     Signup(input: { username: $username, password: $password }) {
-      id
-      username
+      token
+      user {
+        id
+      }
     }
   }
 `);
@@ -65,21 +68,23 @@ export const Signup = () => {
         password: attrs.password,
       },
     });
-    const userIdFromSignup = result.data?.Signup?.id;
-    if (!userIdFromSignup) return;
+    localStorage.setItem('token', result.data?.Signup?.token || '');
+    const idLocal = result.data?.Signup?.user?.id;
+    if (!idLocal) return;
 
     const UserDetails = await AddtoUserDetailes({
       variables: {
         firstname: attrs.firstname,
         lastname: attrs.lastname,
-        id: userIdFromSignup,
+        id: idLocal,
       },
     });
 
     console.log('Signup result:', result);
     console.log('Signup result:', UserDetails);
 
-    navigate('/login');
+    isLogin(true);
+    navigate('/marketplace');
   };
 
   return (
