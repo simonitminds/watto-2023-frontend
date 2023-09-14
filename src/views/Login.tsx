@@ -23,7 +23,6 @@ const login = graphql(`
 
 export const Login = () => {
   const [testLoginMutation, { loading, error, data }] = useMutation(login);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   if (useReactiveVar(isLogin)) {
