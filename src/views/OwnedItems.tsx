@@ -6,8 +6,8 @@ import { useQuery } from '@apollo/client';
 import { Spinner } from '../components/spinner';
 
 const GET_USER_ITEMS_QUERY = graphql(`
-  query GetUserItems($input: String!) {
-    getUserItems(userId: $input) {
+  query GetUserItems {
+    getUserItems {
       id
       ...ItemFragment
     }

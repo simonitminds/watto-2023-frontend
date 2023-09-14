@@ -22,10 +22,10 @@ export const Marketplace = () => {
   if (!useReactiveVar(isLogin)) {
     navigate('/login');
   }
-  const userDataString = localStorage.getItem('userData');
-  if (!userDataString) {
-    console.log('cannot get the data');
-  }
+  // const userDataString = localStorage.getItem('userData');
+  // if (!userDataString) {
+  //   console.log('cannot get the data');
+  // }
 
   const { loading, error, data } = useQuery(GET_MARKET_ITEMS_QUERY);
 
