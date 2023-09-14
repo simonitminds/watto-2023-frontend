@@ -1,13 +1,27 @@
 import React from 'react';
 import emitter from './../images/aurora_emitter.png';
 import { FragmentType, graphql, useFragment } from './../gql';
+import { useMutation } from '@apollo/client';
 
-export const GetMarketItems = graphql(`
+const GetMarketItems = graphql(`
   fragment ItemFragment on Item {
     id
     partName
     partDescription
     price
+    userId
+  }
+`);
+
+const BuyItem = graphql(`
+  mutation BuyAnItem($itemId: String!, $sellerId: String!) {
+    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {
+      username
+      money
+      inventory {
+        partName
+      }
+    }
   }
 `);
 
@@ -15,6 +29,14 @@ export const MarketplaceItem = (props: {
   items: FragmentType<typeof GetMarketItems>;
 }) => {
   const item = useFragment(GetMarketItems, props.items);
+  const [purchaseItem] = useMutation(BuyItem, {
+    variables: {
+      itemId: item.id,
+      sellerId: item.userId,
+    },
+    refetchQueries: ['GetMarketItems'],
+  });
+
   return (
     <div className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
       <div className="h-[300px]">
@@ -40,6 +62,10 @@ export const MarketplaceItem = (props: {
               ${item.price}
             </span>
             <a
+              onClick={(e) => {
+                e.preventDefault();
+                purchaseItem();
+              }}
               href="#"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
