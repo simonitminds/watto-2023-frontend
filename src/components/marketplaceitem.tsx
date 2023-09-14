@@ -38,10 +38,10 @@ export const MarketplaceItem = (props: {
   });
 
   return (
-    <div className="w-80 h-[520px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
-      <div className="h-[300px]">
+    <div className="w-72 h-[330px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col flex justify-center items-center">
+      <div className="h-[150px]">
         <img
-          className="p-8 rounded-t-lg object-cover"
+          className=" rounded-t-lg object-cover h-full w-fill "
           src={emitter}
           alt="product image"
         />
@@ -53,7 +53,7 @@ export const MarketplaceItem = (props: {
             {item.partName}
           </h5>
           <p className="text-sm tracking-tight text-gray-900 dark:text-white">
-            {item.partDescription?.slice(0, 260)}
+            {item.partDescription?.slice(0, 85)}
           </p>
         </div>
         <div className="mb-4">
