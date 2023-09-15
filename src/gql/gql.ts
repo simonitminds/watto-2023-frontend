@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n": types.ItemFragmentFragmentDoc,
+    "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    saberPart\n    price\n    userId\n  }\n": types.ItemFragmentFragmentDoc,
     "\n  mutation BuyAnItem($itemId: String!, $sellerId: String!) {\n    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.BuyAnItemDocument,
     "\n  fragment UserItemFragment on Item {\n    id\n    partName\n    price\n    userId\n  }\n": types.UserItemFragmentFragmentDoc,
     "\n  mutation SellAnItem($itemId: String!, $sellerId: String!) {\n    sellItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.SellAnItemDocument,
@@ -42,7 +42,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n"): (typeof documents)["\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    price\n    userId\n  }\n"];
+export function graphql(source: "\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    saberPart\n    price\n    userId\n  }\n"): (typeof documents)["\n  fragment ItemFragment on Item {\n    id\n    partName\n    partDescription\n    saberPart\n    price\n    userId\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
