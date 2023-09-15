@@ -1,5 +1,7 @@
 import React from 'react';
 import { SidebarItem, SidebarProps } from './sidebaritem';
+import { SidebarProfile } from './sidebarprofile';
+
 import { isLogin } from '../State';
 
 import {
@@ -31,6 +33,7 @@ export const Sidebar = () => {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <SidebarProfile></SidebarProfile>
         {sidebarItems.map((item, index) => (
           <ul key={index} className="hover:font-semibold">
             <SidebarItem to={item.to} icon={item.icon} text={item.text} />
