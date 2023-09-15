@@ -1,6 +1,6 @@
 import React from 'react';
 import { SidebarItem, SidebarProps } from './sidebaritem';
-import { LogoutButton } from './logoutbutton';
+import { isLogin } from '../State';
 
 import {
   BuildingStorefrontIcon,
@@ -35,7 +35,15 @@ export const Sidebar = () => {
             <SidebarItem to={item.to} icon={item.icon} text={item.text} />
           </ul>
         ))}
-        <LogoutButton></LogoutButton>
+        <SidebarItem
+          to="/"
+          icon={<BuildingStorefrontIcon />}
+          onClick={() => {
+            localStorage.removeItem('token');
+            isLogin(false);
+          }}
+          text="Logout"
+        ></SidebarItem>
       </div>
     </aside>
   );
