@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Sidebar } from '../components/sidebar';
 import { OwnItem } from '../components/ownitem';
 import { graphql } from './../gql';
 import { useQuery } from '@apollo/client';
@@ -23,7 +22,6 @@ export const OwnedItems = () => {
 
   return (
     <>
-      <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
         <div className="flex flex-wrap gap-4 justify-center items-center ">
           {loading && <Spinner></Spinner>}
