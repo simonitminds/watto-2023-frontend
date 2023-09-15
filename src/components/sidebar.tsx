@@ -17,11 +17,11 @@ export const Sidebar = () => {
       text: 'Marketplace',
     },
     { to: '/marketplace/OwnedItems', icon: <UserIcon />, text: 'Owned items' },
-    {
-      to: '/transactions',
-      icon: <ArchiveBoxIcon />,
-      text: 'Transactions',
-    },
+    // {
+    //   to: '/transactions',
+    //   icon: <ArchiveBoxIcon />,
+    //   text: 'Transactions',
+    // },
   ];
 
   return (
