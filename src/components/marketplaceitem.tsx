@@ -34,7 +34,7 @@ export const MarketplaceItem = (props: {
       itemId: item.id,
       sellerId: item.userId,
     },
-    refetchQueries: ['GetMarketItems'],
+    refetchQueries: 'active',
   });
 
   return (
