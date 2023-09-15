@@ -10,7 +10,7 @@ import { Layout } from './Layout';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/auth',
     element: <AuthWrapper />,
     children: [
       { path: '', element: <Login></Login> },

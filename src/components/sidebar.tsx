@@ -6,6 +6,7 @@ import {
   BuildingStorefrontIcon,
   UserIcon,
   ArchiveBoxIcon,
+  ArrowLeftCircleIcon,
 } from '@heroicons/react/24/solid';
 
 export const Sidebar = () => {
@@ -36,8 +37,8 @@ export const Sidebar = () => {
           </ul>
         ))}
         <SidebarItem
-          to="/"
-          icon={<BuildingStorefrontIcon />}
+          to="/auth"
+          icon={<ArrowLeftCircleIcon />}
           onClick={() => {
             localStorage.removeItem('token');
             isLogin(false);
