@@ -10,7 +10,7 @@ export const Layout = () => {
 
   useEffect(() => {
     if (!is_logged_in) {
-      navigate('/auth');
+      navigate('/');
     }
   }, [is_logged_in, navigate]);
 
