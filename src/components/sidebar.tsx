@@ -6,7 +6,7 @@ import {
   BuildingStorefrontIcon,
   UserIcon,
   ArchiveBoxIcon,
-  ArrowLeftCircleIcon,
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/solid';
 
 export const Sidebar = () => {
@@ -38,11 +38,12 @@ export const Sidebar = () => {
         ))}
         <SidebarItem
           to="/auth"
-          icon={<ArrowLeftCircleIcon />}
+          icon={<ArrowLeftOnRectangleIcon />}
           onClick={() => {
             localStorage.removeItem('token');
             isLogin(false);
           }}
+          styling="bg-red-800 dark:hover:bg-red-600 mt-8"
           text="Logout"
         ></SidebarItem>
       </div>
