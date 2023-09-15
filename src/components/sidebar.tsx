@@ -46,7 +46,7 @@ export const Sidebar = () => {
             localStorage.removeItem('token');
             isLogin(false);
           }}
-          styling="bg-red-800 dark:hover:bg-red-600 mt-8"
+          styling="dark:hover:bg-red-600"
           text="Logout"
         ></SidebarItem>
       </div>
