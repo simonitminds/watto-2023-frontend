@@ -39,6 +39,7 @@ export const Login = () => {
     const result = await testLoginMutation({ variables: attrs });
 
     localStorage.setItem('token', result.data?.login?.token || '');
+    window.location.href = '/auth';
 
     isLogin(true);
   };

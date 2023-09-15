@@ -1,8 +1,8 @@
 import { useReactiveVar } from '@apollo/client';
-import { Cog8ToothIcon, HomeIcon, UserIcon } from '@heroicons/react/24/solid';
 import React, { useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { isLogin } from './State';
+import { Sidebar } from './components/sidebar';
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -16,6 +16,7 @@ export const Layout = () => {
 
   return (
     <div>
+      <Sidebar></Sidebar>
       <Outlet />
     </div>
   );

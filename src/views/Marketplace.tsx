@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Sidebar } from '../components/sidebar';
 import { MarketplaceItem } from '../components/marketplaceitem';
 import { graphql } from './../gql';
 import { useQuery } from '@apollo/client';
@@ -33,7 +32,6 @@ export const Marketplace = () => {
   });
   return (
     <>
-      <Sidebar></Sidebar>
       <div className="p-1 sm:ml-64">
         <div className="flex flex-wrap gap-4 justify-center items-left ">
           {loading && <Spinner></Spinner>}

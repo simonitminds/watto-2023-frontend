@@ -17,6 +17,7 @@ const documents = {
     "\n  mutation BuyAnItem($itemId: String!, $sellerId: String!) {\n    purchaseItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.BuyAnItemDocument,
     "\n  fragment UserItemFragment on Item {\n    id\n    partName\n    price\n    userId\n  }\n": types.UserItemFragmentFragmentDoc,
     "\n  mutation SellAnItem($itemId: String!, $sellerId: String!) {\n    sellItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n": types.SellAnItemDocument,
+    "\n  query GetActiveUser {\n    activeUser {\n      username\n      money\n    }\n  }\n": types.GetActiveUserDocument,
     "\n  mutation TestLoging($username: String!, $password: String!) {\n    login(input: { username: $username, password: $password }) {\n      user {\n        id\n        username\n        money\n      }\n      token\n    }\n  }\n": types.TestLogingDocument,
     "\n  query GetMarketItems {\n    getMarketItems {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetMarketItemsDocument,
     "\n  query GetUserItems {\n    getUserItems {\n      id\n      ...ItemFragment\n    }\n  }\n": types.GetUserItemsDocument,
@@ -54,6 +55,10 @@ export function graphql(source: "\n  fragment UserItemFragment on Item {\n    id
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation SellAnItem($itemId: String!, $sellerId: String!) {\n    sellItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation SellAnItem($itemId: String!, $sellerId: String!) {\n    sellItem(input: { itemId: $itemId, sellerId: $sellerId }) {\n      username\n      money\n      inventory {\n        partName\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetActiveUser {\n    activeUser {\n      username\n      money\n    }\n  }\n"): (typeof documents)["\n  query GetActiveUser {\n    activeUser {\n      username\n      money\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
