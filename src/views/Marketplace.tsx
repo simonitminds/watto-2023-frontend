@@ -19,12 +19,8 @@ const GET_MARKET_ITEMS_QUERY = graphql(`
 export const Marketplace = () => {
   const navigate = useNavigate();
   if (!useReactiveVar(isLogin)) {
-    navigate('/login');
+    navigate('/auth');
   }
-  // const userDataString = localStorage.getItem('userData');
-  // if (!userDataString) {
-  //   console.log('cannot get the data');
-  // }
 
   const { loading, error, data, refetch } = useQuery(GET_MARKET_ITEMS_QUERY);
   useEffect(() => {
